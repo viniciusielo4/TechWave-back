@@ -1,0 +1,8 @@
+inicializar um projeto node: npm init -y
+Instalar bibliotecas necessárias. O projeto é só para back-end
+    npm install pg express dotenv nodemon
+    bibliotecas de back-end: express, adonis, NestJS, NextJS...
+
+Adicionar "dev": "nodemon index.js" no arquivo package.json
+
+Para rodar, basta digitar: npm run dev ou "start": npm start

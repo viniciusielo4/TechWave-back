@@ -1,0 +1,106 @@
+
+CRIAR BANCO DE DADOS:  CREATE DATABASE tests;
+
+Criar a tabela "clientes" com os campos "nome", "idade" e "uf":
+CREATE TABLE clientes (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    idade INTEGER,
+    uf CHAR(2)
+);
+
+--------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------
+
+Arquivos de configuração:
+    .env
+
+    Dentro de .env:
+        USER_NAME = 'postgres'
+        HOST_NAME = 'localhost'
+        DB_NAME = 'tests'
+        DB_PASSWORD = 'davide'
+        DB_DIALECT = 'postgres'
+        PORT_NUMBER = '5432'
+
+Arquivo index.js: É o arquivo que vai ser responsável por rodar a aplicação
+    Tudo que for relativo ao back-end vai no arquivo index.js. Ou seja, para interagir com o banco, a informação bate aqui primeiro e em seguida vai para db.js
+
+Arquivo db.js:
+    Tudo que for relativo a banco de dados vai aqui
+
+----------------------------- ou ----------------------------------------------
+PORT=3000
+CONNECTION_SCTRING=postgresql://localhost
+                                             Se o banco não tem SENHA
+CONNECTION_SCTRING=postgresql://usuario:SENHA@SERVIDOR:PORTA/nomeDObanco
+                                             Se o banco tiver SENHA
+Caso o banco tiver SENHA:
+CONNECTION_SCTRING=postgresql://username:password@host:port/database
+Exemplo: postgresql://john:secret@localhost:5432/my_database
+
+Caso o banco não tiver SENHA:
+Omitting the password entirely====>>>>> CONNECTION_SCTRING=postgresql://username@localhost:5432/my_database
+Using an empty password field ====>>>> CONNECTION_SCTRING=postgresql://username:@localhost:5432/my_database
+
+---------------------------------------------------------------------------
+Teste da rota POST:
+- Usei postman
+- Selecionei POST
+- URL: htpp://localhost:3000/clientes
+- BODY -> RAW:
+{
+    "nome": "teste",
+    "idade": 49,
+    "uf": "SP"
+}
+
+- HEADER -> KEY: Content-Type 
+- HEADER -> Value: application/json
+----------------------------------------------------------------------------
+
+Teste da rota PACTH:
+- Usei postman
+- Selecionei PACTH
+- URL: http://localhost:3000/clientes/3
+- BODY -> RAW:
+{
+    "nome": "João",
+    "idade": 34,
+    "uf": "CE"
+}
+
+----------------------------------------------------------------------------
+
+Teste da rota DELETE:
+- Usei postman
+- Selecionei DELETE
+- URL: http://localhost:3000/clientes/id_do_cliente
+
+----------------------------------------------------------------------------
+------------------------ PUT and PACTH -------------------------------------
+PUT:
+    Purpose: Replaces the entire resource.
+    Usage: When you need to update the entire resource. If any fields are missing in the request, they will be set to null or default values.
+    Idempotence: PUT is idempotent, meaning that making the same request multiple times will have the same effect as making it once.
+    Example: If you have a user resource and you want to update the user’s name and email, you need to send the entire user object, including fields that are not being updated.
+        {
+          "id": 1,
+          "name": "John Doe",
+          "email": "john.doe@example.com",
+          "address": "123 Main St"
+        }
+
+PATCH:
+    Purpose: Partially updates the resource.
+    Usage: When you need to update only specific fields of a resource. This is more efficient as it reduces the amount of data sent over the network.
+    Idempotence: PATCH is not necessarily idempotent, but it can be designed to be so.
+        {
+          "email": "john.doe@example.com"
+        }
+In summary, we use PUT when we want to replace the entire resource and PATCH when we only want to update specific fields
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+CRIAR UMA PASTA E COLOCAR db.js e uma outra pasta para colocar index.js
+
+In REST APIs, both PUT and PATCH methods are used to update resources, but they have distinct functionalities:
