@@ -1,58 +1,45 @@
-require("dotenv").config(); // Ele procura o arquivo .env na raiz do projeto e carrega as variáveis ​​que estão no arquivo .env na memória.
+require("dotenv").config();
 
 const db = require("./db");
-
 const port = process.env.PORT;
-
 const express = require('express');
-
 const app = express();
 
-// como os dados que vamos inserir no banco de dados estão chegando no formato .json, temos que preparar o back-end para receber esses dados
 app.use(express.json());
 
-// app.get('caminho da rota', (função de callback que na verdade é a função que vai ser disparada quando a rota é chamada)=> {})
-
+// Rota raiz
 app.get('/', (req, res) => {
-    res.json({
-        message: "Funcionando!!!"
-    })
-})
+    res.json({ message: "Funcionando!!!" });
+});
 
-// Rota para listar um cliente
-app.get('/clientes/:id', async (req, res) => {
-    const cliente = await db.selectCustomer(req.params.id);
+// Rota para listar um funcionário
+app.get('/funcionarios/:id', async (req, res) => {
+    const funcionario = await db.selectFuncionario(req.params.id);
+    res.json(funcionario);
+});
 
-    res.json(cliente);
-})
+// Rota para listar todos os funcionários
+app.get('/funcionarios', async (req, res) => {
+    const funcionarios = await db.selectFuncionarios();
+    res.json(funcionarios);
+});
 
-// Rota para listar todos os clientes
-app.get('/clientes', async (req, res) => {
-    const clientes = await db.selectCustomers();
+// Rota para inserir funcionário
+app.post('/funcionarios', async (req, res) => {
+    await db.insertFuncionario(req.body);
+    res.sendStatus(201);
+});
 
-    res.json(clientes);
-})
+// Rota para editar/atualizar funcionário
+app.patch("/funcionarios/:id", async (req, res) => {
+    await db.updateFuncionario(req.params.id, req.body);
+    res.sendStatus(200);
+});
 
-// Rota para inserir clientes
-// Para testar esta rota vamos utilizar o postman
-               // Adiciona "app.use(express.json());" no começo do código
-app.post('/clientes', async (req, res) => {
-    await db.insertCustomer(req.body);
-    res.sendStatus(201) // 201 é o código de sucesso
-})
+// Rota para excluir funcionário
+app.delete("/funcionarios/:id", async (req, res) => {
+    await db.deleteFuncionario(req.params.id);
+    res.sendStatus(204);
+});
 
-// Rota para editar/atualizar clientes
-app.patch("/clientes/:id", async (req, res) => {
-    await db.updateCustomer(req.params.id, req.body)
-    res.sendStatus(200) // 200 é o código de atualização
-})
-
-// Rota para excluir cliente
-app.delete("/clientes/:id", async (req, res) => {
-    await db.deleteCustomer(req.params.id)
-    res.sendStatus(204) // 204 é o código para exclusão
-})
-
-app.listen(port);
-
-console.log("Backend is running")
+app.listen(port, () => console.log("Backend is running"));
