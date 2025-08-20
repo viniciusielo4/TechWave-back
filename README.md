@@ -35,6 +35,6 @@ A aplicação conta com:
 
 ### 🔹 Pré-requisitos
 - [Node.js](https://nodejs.org/) (versão 18+ recomendada)  
-- [PostgreSQL](https://www.postgresql.org/) instalado e configurado  
+- [PostgreSQL](https://www.postgresql.org/) instalado e configurado.  
 
 
