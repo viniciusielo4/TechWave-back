@@ -3,8 +3,9 @@ const db = require("./dbAtual");
 const port = process.env.PORT;
 const express = require('express');
 const app = express();
-
+const cors  = require("cors")
 app.use(express.json());
+app.use(cors());
 
 // Rota raiz
 app.get('/', (req, res) => {

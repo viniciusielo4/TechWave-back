@@ -11,11 +11,11 @@
   "author": "Davide",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
     "pg": "^8.12.0"
   },
-  "devDependencies": {},
-  "description": ""
+  "description": "## 📌 Descrição do Projeto Este projeto tem como objetivo criar uma aplicação web para **cadastrar, listar, atualizar e excluir funcionários**.   O sistema foi desenvolvido em **React (frontend)** e **Node.js com Express + PostgreSQL (backend)**."
 }

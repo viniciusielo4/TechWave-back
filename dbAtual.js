@@ -45,7 +45,7 @@ async function ensureTable() {
       id SERIAL PRIMARY KEY,
       nomeCompleto VARCHAR(150) NOT NULL,
       cargo VARCHAR(100) NOT NULL,
-      salario NUMERIC(10,2) NOT NULL,
+      salario varchar(100) NOT NULL,
       qualificacoes TEXT,
       cargaHoraria VARCHAR(20)
     );
@@ -108,8 +108,7 @@ async function selectFuncionario(id) {
 async function insertFuncionario(funcionario) {
   const client = await connect();
   const sql = `
-    INSERT INTO funcionarios (nomeCompleto, cargo, salario, qualificacoes, cargaHoraria)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO funcionarios VALUES (default, $1, $2, $3, $4, $5);
   `;
   const values = [
     funcionario.nomeCompleto,
